@@ -13,15 +13,20 @@
         <div fxLayout="row" fxLayoutAlign="center">
           <mat-form-field appearance='fill' class="content" fxFlex="100">
             <mat-label>Share your thoughts</mat-label>
-            <textarea matInput placeholder="Ex. Found a mouse in the cheese" formControlName='content'></textarea>
-            <mat-error *ngIf="postForm.controls['content'].hasError('required')">
+            <textarea #content
+              matInput
+              placeholder="Ex. Found a mouse in the cheese"
+              formControlName='content'
+              (focus)="updateFocusState($event, true)"
+              (blur)="updateFocusState($event, false)"></textarea>
+            <mat-error *ngIf="postForm.controls['content'].hasError('required') && !postForm.controls['content'].pristine">
               Your thoughts should not be empty
             </mat-error>
           </mat-form-field>
         </div>
-        <div fxLayout="row" fxLayoutAlign="center">
-          <button class="btn" type="submit">Post</button>&nbsp;
-          <button class="btn" type="reset">Cancel</button>
+        <div fxLayout="row" fxLayoutAlign="center" *ngIf="isFocused">
+          <button class="btn" [disabled]="!content.value.length" type="submit">Post</button>&nbsp;
+          <button class="btn" type="reset" (click)="onCancel()">Cancel</button>
         </div>
       </form>
     </div>

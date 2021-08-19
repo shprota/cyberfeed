@@ -37,12 +37,6 @@ export class AppService {
       });
   }
 
-  reload() {
-    this.feedSubject.next(List([]));
-    this.currentPage = 1;
-    this.loadPage();
-  }
-
   submitEntry(data: FeedItemCreateDto) {
     return this.http.post<FeedItemInterface>(`${environment.apiBaseUrl}/feed`, data)
       .pipe(
