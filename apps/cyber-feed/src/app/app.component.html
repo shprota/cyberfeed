@@ -1,0 +1,63 @@
+<section fxLayout="row" fxLayoutAlign="center">
+  <div fxFlex="100%" fxFlex.gt-lg="30%" fxFlex.gt-sm="50%">
+    <header class='container' fxLayout='row' fxLayoutAlign='center'>
+      <h1>Cyber Feed</h1>
+    </header>
+    <div fxLayout="row" fxLayoutGap="10px">
+      <div fxFlex="0">
+        <img src="assets/01.jpg" class="avatar-img">
+      </div>
+      <form [formGroup]='postForm' (ngSubmit)="submitEntry()" fxFlex="100%">
+        <div class="blur" *ngIf="busy">
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center">
+          <mat-form-field appearance='fill' class="content" fxFlex="100">
+            <mat-label>Share your thoughts</mat-label>
+            <textarea matInput placeholder="Ex. Found a mouse in the cheese" formControlName='content'></textarea>
+            <mat-error *ngIf="postForm.controls['content'].hasError('required')">
+              Your thoughts should not be empty
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center">
+          <button class="btn" type="submit">Post</button>&nbsp;
+          <button class="btn" type="reset">Cancel</button>
+        </div>
+      </form>
+    </div>
+    <main class='container' fxLayout='column' fxLayoutAlign='center'>
+      <div fxFlex='20' *ngIf="service.feed$ | async as feed">
+        <mat-card class="card" *ngFor="let item of feed ">
+          <mat-card-title fxLayout="row">
+            <div class="left-section" fxFlex="100">
+              <div class="avatar">
+                <img src="assets/01.jpg" alt="Seemo Cohen">
+              </div>
+              <div class="name">Seemo Cohen</div>
+              <div class="title">System Analyst</div>
+              <div class="date">{{item.created | dfnsFormatRelativeToNow}}</div>
+            </div>
+            <div class="right-section" fxFlex="10">
+              <button mat-icon-button color="primary" (click)="like(item)">
+                <mat-icon>favorite_border</mat-icon>
+              </button>
+            </div>
+          </mat-card-title>
+          <mat-card-content>
+            {{item.content}}
+          </mat-card-content>
+          <mat-card-footer>
+            <div class="likes-no" [ngPlural]="item.likes">
+              <ng-template ngPluralCase="=0">No likes yet</ng-template>
+              <ng-template ngPluralCase="=1">One Like</ng-template>
+              <ng-template ngPluralCase="other">{{item.likes}} Likes</ng-template>
+            </div>
+          </mat-card-footer>
+        </mat-card>
+      </div>
+      <div class="next-page" fxFlex='30' *ngIf="service.hasNextPage">
+        <a href="javascript:void(0)" (click)="loadNext()">Load More</a>
+      </div>
+    </main>
+  </div>
+</section>
