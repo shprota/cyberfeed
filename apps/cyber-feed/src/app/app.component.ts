@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { AppService } from './app.service';
-import { Observable } from 'rxjs';
 import { FormBuilder, Validators } from '@angular/forms';
 import { FeedItemCreateDto } from './feed-item-create.dto';
 import { FeedItemInterface } from '@cyberproof/dto';

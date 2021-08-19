@@ -18,3 +18,5 @@ yarn start api & yarn start
 
 * For the API docs open http://localhost:3333/api
 
+* Run the lint: ```yarn lint```
+* Sorry, no tests
